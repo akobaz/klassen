@@ -1,36 +1,35 @@
-Klassen
-=======
+# Klassen
 
 A Python utility to generate statistics for assigned CPC/IPC classes.
 
-Description
------------
+## Description
 
-This script provides functions to read a matrix of CPC (IPC) classes from a CSV
-file, to generate statistics and frequency counts for all unique elements, and
-to generate a bar chart plot for the frequency counts vs unique classes.
+This script provides functions to ...
 
-How to use
-----------
+1. read a matrix of CPC (IPC) classes from a CSV file,
+2. generate frequency counts for all unique elements, and
+3. generate a bar chart plot for the frequency counts vs unique classes.
 
-Run the script with your Python interpreter, and add the name of your CSV data
-file as command-line argument.
+## How to use
 
-## Example
+Run the script with your Python interpreter, and add the CSV data file's name
+as command-line argument.
+
+### Example
 
 ```
   python3 klassen_stats.py example.csv
 ```
 
-There is a sample input file located in the `data/` directory to get started.
+There are some sample input files located in the `csv/` directory to get started.
 
-Requirements
-------------
+## Requirements
 
 The script requires Python3 with the [NumPy package](https://numpy.org/ "NumPy").
+We need the `matplotlib.pyplot` module for the visualization, and the `csv`
+module takes care of reading CSV files.
 
-License
--------
+## License
 
 The script is released under the GNU General Public License (GPL) Version 2.
 See the file LICENSE for details.
