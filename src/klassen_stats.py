@@ -7,6 +7,7 @@
          1.1, 25 Feb 2020
          1.2, 30 Apr 2020
          1.3, 06 May 2020
+         1.4, 09 May 2020
 @brief   generate statistics for assigned CPC/IPC classes
 @details generate statistics and frequency counts for matrix elements
          input from a CSV file; generate bar chart plot for frequencies
@@ -24,26 +25,29 @@ import sys
 # -----------------------------------------------------------------------------
 
 # global constants
-CONST_VERSION_ = "1.3"
-CONST_DATE_    = "06 May 2020"
+CONST_VERSION_ = "1.4"
+CONST_DATE_    = "09 May 2020"
 
 # show verbose debug output ? True | False (default)
 DEBUG_stats    = False
-
-# initialize empty input array
-arr = []
 
 # -----------------------------------------------------------------------------
 
 # read input from CSV file
 def ReadCSVFile(filename):
-    """read CSV formatted input from 'filename'"""
+    """
+    read CSV formatted input from 'filename'
+    and return data formatted as numpy ndarray
+    """
     with open(filename, 'r') as fp:
         # TODO FIXME enable selection of delimiter (default: ',')
         rows = csv.reader(fp, delimiter=',')
         # DEBUG
         if DEBUG_stats:
             print( rows )
+
+        # initialize empty input array
+        arr = []
 
         # fill array with matrix elements
         for row in rows:
@@ -52,11 +56,16 @@ def ReadCSVFile(filename):
             if DEBUG_stats:
                 print( row )
 
+        return arr
+
 # -----------------------------------------------------------------------------
 
 # generate counts and show results
-def GetCounts():
-    """calculate IPC/CPC class-symbols frequency counts"""
+def GetCounts(arr):
+    """
+    calculate IPC/CPC class-symbols frequency counts
+    from input ndarray 'arr'
+    """
 
     # extract sub-matrix that contains only CPC/IPC symbols
     # https://docs.scipy.org/doc/numpy/user/basics.indexing.html
@@ -92,7 +101,10 @@ def GetCounts():
 
 # generate bar chart plot
 def MakePlot(data):
-    """create a bar chart with class labels and usage frequency"""
+    """
+    create a bar chart with class labels and usage frequency
+    from input ndarray 'data'
+    """
 
     # select figure size (width, height) in inches
     plt.figure(figsize=(4,12))
@@ -149,14 +161,18 @@ def main():
     # check command-line arguments
     argc = len( sys.argv )
     if argc > 1:
-        # read input file to variable 'arr'
-        ReadCSVFile( sys.argv[1] )
+        # read input file from 1st argument
+        data = ReadCSVFile( sys.argv[1] )
+        # DEBUG
+        if DEBUG_stats:
+            print( data )
 
         # generate frequency counts
-        cnts = GetCounts()
+        cnts = GetCounts( data )
+        # show frequency counts
         print( cnts )
 
-        # show diagram with statistics
+        # show histogram with statistics
         MakePlot( cnts )
 
         # exit indicating success
